@@ -6,8 +6,8 @@ import { useCartContext } from "../context/cart_context";
 import AmountButtons from "./AmountButtons";
 
 const AddToCart = ({ product }) => {
-
-
+  // add to cart
+  const { addToCart } = useCartContext();
   const { id, stock, colors } = product;
   const [mainColor, setMainColor] = useState(colors[0]);
   const [amount, setAmount] = useState(1);
@@ -30,11 +30,10 @@ const AddToCart = ({ product }) => {
       return tempAmount;
     });
   };
-
   return (
     <Wrapper>
       <div className="colors">
-        <span> colors: </span>
+        <span>colors :</span>
         <div>
           {colors.map((color, index) => {
             return (
@@ -44,9 +43,7 @@ const AddToCart = ({ product }) => {
                 className={`${
                   mainColor === color ? "color-btn active" : "color-btn"
                 }`}
-                onClick={() => {
-                  setMainColor(color);
-                }}
+                onClick={() => setMainColor(color)}
               >
                 {mainColor === color ? <FaCheck /> : null}
               </button>
@@ -56,15 +53,15 @@ const AddToCart = ({ product }) => {
       </div>
       <div className="btn-container">
         <AmountButtons
-          amount={amount}
-          decrease={decrease}
           increase={increase}
-          setAmount={setAmount}
+          decrease={decrease}
+          amount={amount}
         />
+
         <Link
           to="/cart"
           className="btn"
-          // onClick={() => addToCart(id, mainColor, amount, product)}
+          onClick={() => addToCart(id, mainColor, amount, product)}
         >
           add to cart
         </Link>
@@ -72,7 +69,6 @@ const AddToCart = ({ product }) => {
     </Wrapper>
   );
 };
-
 const Wrapper = styled.section`
   margin-top: 2rem;
   .colors {
@@ -97,7 +93,7 @@ const Wrapper = styled.section`
     margin-right: 0.5rem;
     border: none;
     cursor: pointer;
-    opacity: 1;
+    opacity: 0.5;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -112,7 +108,6 @@ const Wrapper = styled.section`
   .btn-container {
     margin-top: 2rem;
   }
-
   .btn {
     margin-top: 1rem;
     width: 140px;
